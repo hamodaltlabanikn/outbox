@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OUTBOX CAFE — Outside The Box, Always Inside Our Hearts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--charcoal:#0a0a0a;--charcoal-light:#1a1a1a;--charcoal-mid:#2a2a2a;
+--industrial-grey:#6b6b6b;--warm-grey:#8a8a8a;--light-grey:#b0b0b0;
+--cream:#e8e0d4;--gold:#c9a96e;--gold-light:#dfc08a;--gold-dark:#a8853f;
+--orange-accent:#e07c3e;--coral:#c45e3a;--latte:#d4b896;
+--bg-primary:#0a0a0a;--bg-secondary:#111111;--bg-card:#161616;--bg-card-hover:#1e1e1e;
+--text-primary:#f5f0ea;--text-secondary:#8a8a8a;--text-tertiary:#5a5a5a;
+--border-color:rgba(201,169,110,0.15);--border-subtle:rgba(255,255,255,0.06);
+--glow-gold:rgba(201,169,110,0.3);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold-dark) var(--charcoal)}
+html::-webkit-scrollbar{width:6px}html::-webkit-scrollbar-track{background:var(--charcoal)}html::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg-primary);color:var(--text-primary);overflow-x:hidden;cursor:none;line-height:1.6}
+
+.cursor-dot{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transition:transform .1s ease;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:40px;height:40px;border:1.5px solid var(--gold);border-radius:50%;pointer-events:none;z-index:99998;transition:all .15s ease;mix-blend-mode:difference}
+.cursor-ring.hover{transform:scale(1.8);border-color:var(--gold-light);background:rgba(201,169,110,0.05)}
+.noise-overlay{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.loader{position:fixed;inset:0;background:var(--charcoal);z-index:100000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s ease,visibility .8s ease}
+.loader.hidden{opacity:0;visibility:hidden}
+.loader-brand{font-size:2rem;font-weight:800;letter-spacing:.3em;color:var(--gold);margin-bottom:2rem;display:flex;align-items:center;gap:.5rem}
+.loader-bar{width:200px;height:2px;background:var(--charcoal-mid);border-radius:2px;overflow:hidden}
+.loader-progress{height:100%;background:linear-gradient(90deg,var(--gold),var(--orange-accent));border-radius:2px;animation:loading 2s ease forwards}
+@keyframes loading{0%{width:0}100%{width:100%}}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.25rem 2rem;transition:all .5s cubic-bezier(.4,0,.2,1)}
+.nav.scrolled{background:rgba(10,10,10,.85);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border-subtle);padding:.75rem 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.nav-logo-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--gold),var(--orange-accent));border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;color:var(--charcoal);transform:rotate(-3deg);transition:transform .3s ease;letter-spacing:.02em}
+.nav-logo:hover .nav-logo-icon{transform:rotate(0) scale(1.05)}
+.nav-logo-text{font-weight:800;font-size:1.15rem;letter-spacing:.15em;color:var(--text-primary)}
+.nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
+.nav-links a{color:var(--light-grey);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:color .3s ease;position:relative;display:inline-flex;align-items:center;gap:.4rem}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s ease}
+.nav-links a:hover{color:var(--gold)}.nav-links a:hover::after{width:100%}
+.nav-cta{background:transparent!important;border:1px solid var(--gold)!important;color:var(--gold)!important;padding:.5rem 1.5rem!important;border-radius:50px;font-size:.75rem!important;letter-spacing:.12em;transition:all .3s ease!important}
+.nav-cta:hover{background:var(--gold)!important;color:var(--charcoal)!important}.nav-cta::after{display:none!important}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px}
+.nav-hamburger span{width:24px;height:2px;background:var(--cream);transition:all .3s ease}
+.mobile-menu{position:fixed;inset:0;background:rgba(10,10,10,.97);backdrop-filter:blur(30px);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;visibility:hidden;transition:all .5s ease}
+.mobile-menu.active{opacity:1;visibility:visible}
+.mobile-menu a{color:var(--cream);text-decoration:none;font-size:2rem;font-weight:300;letter-spacing:.15em;transition:color .3s ease;display:flex;align-items:center;gap:.75rem}
+.mobile-menu a:hover{color:var(--gold)}
+.mobile-close{position:absolute;top:1.5rem;right:2rem;color:var(--cream);cursor:pointer;background:none;border:none;font-size:1.5rem;display:flex;align-items:center}
+
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.25) contrast(1.1) saturate(.8);transform:scale(1.05)}
+.hero-gradient{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(201,169,110,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 50%,rgba(224,124,62,.06) 0%,transparent 60%),linear-gradient(180deg,rgba(10,10,10,.3) 0%,rgba(10,10,10,.6) 50%,rgba(10,10,10,.95) 100%)}
+.hero-particles{position:absolute;inset:0;z-index:1;overflow:hidden}
+.particle{position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;opacity:0;animation:particleFloat linear infinite}
+@keyframes particleFloat{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:.6}90%{opacity:.6}100%{opacity:0;transform:translateY(-10vh) scale(1)}}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:900px;padding:0 2rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,169,110,.08);border:1px solid rgba(201,169,110,.2);padding:.5rem 1.5rem;border-radius:50px;font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;opacity:0;transform:translateY(30px);animation:fadeUp 1s ease .5s forwards}
+.hero-badge .dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,7rem);font-weight:800;line-height:.95;letter-spacing:-.02em;margin-bottom:1.5rem;opacity:0;transform:translateY(40px);animation:fadeUp 1s ease .7s forwards}
+.hero-title .line1{display:block;color:var(--cream)}
+.hero-title .line2{display:block;background:linear-gradient(135deg,var(--gold),var(--orange-accent),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-subtitle{font-size:1.1rem;font-weight:300;color:var(--warm-grey);max-width:500px;margin:0 auto 3rem;line-height:1.8;opacity:0;transform:translateY(30px);animation:fadeUp 1s ease .9s forwards}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:1.25rem;opacity:0;transform:translateY(30px);animation:fadeUp 1s ease 1.1s forwards}
+.btn-primary{display:inline-flex;align-items:center;gap:.75rem;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--charcoal);padding:1rem 2.5rem;border-radius:50px;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--orange-accent),var(--gold));opacity:0;transition:opacity .3s ease}
+.btn-primary:hover::before{opacity:1}.btn-primary span,.btn-primary iconify-icon{position:relative;z-index:1}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 40px var(--glow-gold)}
+.btn-secondary{display:inline-flex;align-items:center;gap:.75rem;background:transparent;color:var(--cream);padding:1rem 2.5rem;border-radius:50px;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:all .3s ease}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--text-tertiary);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:0;animation:fadeUp 1s ease 1.5s forwards}
+.scroll-line{width:1px;height:40px;background:linear-gradient(180deg,var(--gold),transparent);animation:scrollDown 2s ease infinite}
+@keyframes scrollDown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+.marquee-section{padding:1.5rem 0;border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);overflow:hidden;background:var(--bg-secondary)}
+.marquee-track{display:flex;animation:marquee 30s linear infinite;width:max-content}
+.marquee-item{display:flex;align-items:center;gap:2rem;padding:0 2rem;white-space:nowrap}
+.marquee-item span{font-size:.8rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--warm-grey);display:flex;align-items:center;gap:.75rem}
+.marquee-item .sep{width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.section{padding:7rem 2rem;position:relative}
+.section-container{max-width:1400px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:5rem}
+.section-icon{width:80px;height:80px;margin:0 auto 2rem;background:linear-gradient(135deg,rgba(201,169,110,.08),rgba(224,124,62,.03));border:1px solid rgba(201,169,110,.12);border-radius:24px;display:flex;align-items:center;justify-content:center;color:var(--gold);transition:all .3s ease}
+.section-icon:hover{transform:scale(1.08);border-color:rgba(201,169,110,.25);box-shadow:0 0 30px rgba(201,169,110,.1)}
+.section-label{display:inline-flex;align-items:center;gap:.75rem;font-size:.7rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.section-label::before,.section-label::after{content:'';width:30px;height:1px;background:var(--gold);opacity:.4}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;color:var(--cream);margin-bottom:1rem;line-height:1.1}
+.section-desc{font-size:1rem;color:var(--warm-grey);max-width:550px;margin:0 auto;line-height:1.8}
+
+.menu-section{background:var(--bg-primary)}
+.menu-categories{display:flex;justify-content:center;gap:.5rem;margin-bottom:4rem;flex-wrap:wrap}
+.menu-cat-btn{background:transparent;border:1px solid var(--border-subtle);color:var(--warm-grey);padding:.6rem 1.8rem;border-radius:50px;font-family:'Inter',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s ease;display:inline-flex;align-items:center;gap:.5rem}
+.menu-cat-btn:hover,.menu-cat-btn.active{background:var(--gold);border-color:var(--gold);color:var(--charcoal)}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
+.menu-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:20px;padding:2rem;transition:all .5s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.menu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s ease}
+.menu-card:hover{background:var(--bg-card-hover);border-color:var(--border-color);transform:translateY(-4px)}.menu-card:hover::before{opacity:1}
+.menu-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+.menu-card-icon{width:50px;height:50px;background:linear-gradient(135deg,rgba(201,169,110,.1),rgba(224,124,62,.05));border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem}
+.menu-card-price{font-size:1.2rem;font-weight:700;color:var(--gold)}.menu-card-price small{font-size:.65rem;font-weight:500;color:var(--warm-grey);margin-right:.25rem}
+.menu-card-name{font-size:1.2rem;font-weight:700;color:var(--cream);margin-bottom:.5rem}
+.menu-card-desc{font-size:.85rem;color:var(--warm-grey);line-height:1.7}
+.menu-card-tags{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+.menu-tag{font-size:.65rem;font-weight:600;letter-spacing:.05em;padding:.3rem .8rem;border-radius:50px;background:rgba(201,169,110,.08);color:var(--gold);border:1px solid rgba(201,169,110,.12);display:inline-flex;align-items:center;gap:.3rem}
+.menu-tag.spicy{background:rgba(224,124,62,.08);color:var(--orange-accent);border-color:rgba(224,124,62,.12)}
+.menu-card.featured{grid-column:span 2;background:linear-gradient(135deg,var(--bg-card),rgba(201,169,110,.03));border-color:rgba(201,169,110,.15)}
+.menu-card.featured .menu-card-icon{width:60px;height:60px;font-size:1.6rem;background:linear-gradient(135deg,var(--gold),var(--orange-accent));color:var(--charcoal)}
+
+.about-section{background:var(--bg-secondary)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-image-wrap{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:4/5}
+.about-image-wrap img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .7s ease}
+.about-image-wrap:hover img{transform:scale(1.05)}
+.about-image-badge{position:absolute;bottom:1.5rem;left:1.5rem;background:rgba(10,10,10,.8);backdrop-filter:blur(20px);padding:1rem 1.5rem;border-radius:16px;border:1px solid var(--border-subtle);display:flex;align-items:center;gap:.75rem}
+.about-image-badge span{display:block;font-size:1.8rem;font-weight:800;color:var(--gold);line-height:1}
+.about-image-badge small{font-size:.7rem;color:var(--warm-grey);letter-spacing:.1em;text-transform:uppercase}
+.about-content-label{font-size:.7rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+.about-content-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:1.5rem}
+.about-content-desc{font-size:.95rem;color:var(--warm-grey);line-height:1.9;margin-bottom:2.5rem}
+.about-values{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.about-value{display:flex;gap:1rem;align-items:flex-start}
+.about-value-icon{width:40px;height:40px;background:rgba(201,169,110,.08);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.1rem;flex-shrink:0}
+.about-value h4{font-size:.85rem;font-weight:700;color:var(--cream);margin-bottom:.25rem}
+.about-value p{font-size:.75rem;color:var(--warm-grey);line-height:1.5}
+
+.experience-section{background:var(--bg-primary);overflow:hidden}
+.experience-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.experience-card{position:relative;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:24px;padding:2.5rem;text-align:center;transition:all .5s ease;overflow:hidden}
+.experience-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--orange-accent));transform:scaleX(0);transition:transform .5s ease}
+.experience-card:hover{transform:translateY(-8px);border-color:var(--border-color)}.experience-card:hover::after{transform:scaleX(1)}
+.experience-icon{width:70px;height:70px;margin:0 auto 1.5rem;background:linear-gradient(135deg,rgba(201,169,110,.08),rgba(224,124,62,.04));border-radius:20px;display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.experience-card h3{font-size:1.15rem;font-weight:700;color:var(--cream);margin-bottom:.75rem}
+.experience-card p{font-size:.85rem;color:var(--warm-grey);line-height:1.7}
+
+.gallery-section{background:var(--bg-secondary)}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,280px);gap:1rem}
+.gallery-item{position:relative;border-radius:16px;overflow:hidden;cursor:pointer}
+.gallery-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+.gallery-item:nth-child(4){grid-column:span 2}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.gallery-item:hover img{transform:scale(1.08)}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,10,10,.9) 100%);display:flex;flex-direction:column;align-items:flex-start;padding:1.5rem;justify-content:flex-end;opacity:0;transition:opacity .3s ease}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay .gallery-tag{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);background:rgba(201,169,110,.12);padding:.25rem .7rem;border-radius:50px;margin-bottom:.5rem;display:inline-flex;align-items:center;gap:.3rem}
+.gallery-overlay .gallery-caption{font-size:.9rem;font-weight:600;color:var(--cream);letter-spacing:.02em;display:flex;align-items:center;gap:.4rem}
+.gallery-overlay .gallery-caption iconify-icon{color:var(--gold)}
+
+.testimonials-section{background:var(--bg-primary)}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.testimonial-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:20px;padding:2.5rem;transition:all .3s ease}
+.testimonial-card:hover{border-color:var(--border-color);transform:translateY(-4px)}
+.testimonial-stars{display:flex;gap:.25rem;margin-bottom:1.25rem;color:var(--gold)}
+.testimonial-text{font-size:.95rem;color:var(--light-grey);line-height:1.8;margin-bottom:1.5rem;font-style:italic;position:relative;padding-right:1.5rem}
+.testimonial-text::before{content:'\201D';position:absolute;right:-.2rem;top:-.5rem;font-family:'Playfair Display',serif;font-size:3rem;color:rgba(201,169,110,.15);line-height:1}
+.testimonial-author{display:flex;align-items:center;gap:1rem}
+.testimonial-avatar{width:44px;height:44px;border-radius:12px;object-fit:cover}
+.testimonial-author h4{font-size:.85rem;font-weight:700;color:var(--cream)}
+.testimonial-author p{font-size:.7rem;color:var(--warm-grey);display:flex;align-items:center;gap:.3rem}
+.testimonial-author p iconify-icon{color:var(--gold)}
+
+.stats-section{padding:5rem 2rem;background:linear-gradient(135deg,rgba(201,169,110,.03),rgba(224,124,62,.02));border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle)}
+.stats-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+.stat-item h3{font-family:'Playfair Display',serif;font-size:3rem;font-weight:800;color:var(--gold);line-height:1;margin-bottom:.5rem}
+.stat-item p{font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--warm-grey);display:flex;align-items:center;justify-content:center;gap:.4rem}
+.stat-item p iconify-icon{color:var(--gold);opacity:.6}
+
+.contact-section{background:var(--bg-secondary)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem}
+.contact-info h3{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--cream);margin-bottom:1.5rem;line-height:1.15}
+.contact-info>p{font-size:.95rem;color:var(--warm-grey);line-height:1.8;margin-bottom:2.5rem}
+.contact-details{display:flex;flex-direction:column;gap:1.5rem}
+.contact-detail{display:flex;align-items:center;gap:1rem}
+.contact-detail-icon{width:48px;height:48px;background:rgba(201,169,110,.08);border:1px solid rgba(201,169,110,.12);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;transition:all .3s ease}
+.contact-detail:hover .contact-detail-icon{background:var(--gold);color:var(--charcoal)}
+.contact-detail h4{font-size:.8rem;font-weight:700;color:var(--cream);margin-bottom:.2rem}
+.contact-detail p{font-size:.8rem;color:var(--warm-grey)}
+.contact-form{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:24px;padding:3rem}
+.form-group{margin-bottom:1.5rem}
+.form-group label{display:flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-grey);margin-bottom:.5rem}
+.form-group label iconify-icon{color:var(--gold);opacity:.6}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--charcoal-light);border:1px solid var(--border-subtle);border-radius:12px;padding:.9rem 1.25rem;color:var(--cream);font-family:'Inter',sans-serif;font-size:.85rem;transition:all .3s ease;outline:none}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--text-tertiary)}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,.08)}
+.form-group textarea{resize:vertical;min-height:120px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-submit{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--charcoal);padding:1rem;border:none;border-radius:12px;font-family:'Inter',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .3s ease;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 10px 30px var(--glow-gold)}
+
+.cta-section{padding:8rem 2rem;background:var(--bg-primary);text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(201,169,110,.06),transparent 70%);pointer-events:none}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;color:var(--cream);margin-bottom:1.5rem;line-height:1.05;position:relative}
+.cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold),var(--orange-accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-desc{font-size:1rem;color:var(--warm-grey);max-width:480px;margin:0 auto 2.5rem;line-height:1.8}
+
+.footer{background:var(--charcoal);border-top:1px solid var(--border-subtle);padding:5rem 2rem 2rem}
+.footer-grid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:4rem}
+.footer-brand h3{font-weight:800;font-size:1.2rem;letter-spacing:.15em;color:var(--cream);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.footer-brand h3 iconify-icon{color:var(--gold)}
+.footer-brand p{font-size:.85rem;color:var(--warm-grey);line-height:1.8;margin-bottom:1.5rem;max-width:320px}
+.footer-social{display:flex;gap:.75rem}
+.footer-social a{width:40px;height:40px;border:1px solid var(--border-subtle);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--warm-grey);transition:all .3s ease;text-decoration:none}
+.footer-social a:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,169,110,.05)}
+.footer-col h4{font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);margin-bottom:1.5rem;display:flex;align-items:center;gap:.4rem}
+.footer-col h4 iconify-icon{color:var(--gold)}
+.footer-col a{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--warm-grey);text-decoration:none;margin-bottom:.75rem;transition:color .3s ease}
+.footer-col a iconify-icon{opacity:.5;transition:all .3s ease}
+.footer-col a:hover{color:var(--gold)}.footer-col a:hover iconify-icon{opacity:1;color:var(--gold)}
+.footer-bottom{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:2rem;border-top:1px solid var(--border-subtle)}
+.footer-bottom p{font-size:.75rem;color:var(--text-tertiary);display:flex;align-items:center;gap:.4rem}
+.footer-bottom p iconify-icon{color:var(--gold)}
+.footer-bottom-links{display:flex;gap:2rem}
+.footer-bottom-links a{font-size:.75rem;color:var(--text-tertiary);text-decoration:none;transition:color .3s ease}
+.footer-bottom-links a:hover{color:var(--gold)}
+
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg-card);border:1px solid var(--border-color);border-radius:16px;padding:1rem 1.5rem;display:flex;align-items:center;gap:.75rem;z-index:10000;transform:translateY(100px);opacity:0;transition:all .5s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(20px)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-icon{color:var(--gold)}
+.toast-message{font-size:.85rem;color:var(--cream);font-weight:500}
+
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+
+.back-to-top{position:fixed;bottom:2rem;left:2rem;width:48px;height:48px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--gold);cursor:pointer;z-index:100;opacity:0;visibility:hidden;transition:all .3s ease}
+.back-to-top.visible{opacity:1;visibility:visible}
+.back-to-top:hover{background:var(--gold);color:var(--charcoal);transform:translateY(-3px)}
+
+@media(max-width:1024px){
+.about-grid{grid-template-columns:1fr;gap:3rem}.contact-grid{grid-template-columns:1fr;gap:3rem}
+.experience-cards{grid-template-columns:1fr 1fr}.experience-card:last-child{grid-column:span 2}
+.gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,220px)}
+.gallery-item:nth-child(1){grid-column:span 2;grid-row:span 1}.gallery-item:nth-child(4){grid-column:span 1}
+.footer-grid{grid-template-columns:1fr 1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}
+.menu-card.featured{grid-column:span 1}
+}
+@media(max-width:768px){
+.nav-links{display:none}.nav-hamburger{display:flex}
+.hero-title{font-size:clamp(2.5rem,10vw,4rem)}.hero-actions{flex-direction:column;gap:1rem}
+.btn-primary,.btn-secondary{width:100%;justify-content:center}
+.menu-grid{grid-template-columns:1fr}.testimonials-grid{grid-template-columns:1fr}
+.experience-cards{grid-template-columns:1fr}.experience-card:last-child{grid-column:span 1}
+.gallery-grid{grid-template-columns:1fr;grid-template-rows:auto}
+.gallery-item:nth-child(1){grid-column:span 1;grid-row:span 1}.gallery-item{height:220px}
+.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:1rem;text-align:center}
+.about-values{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}
+.stats-grid{grid-template-columns:1fr 1fr;gap:2rem}.stat-item h3{font-size:2.2rem}
+.cursor-dot,.cursor-ring{display:none}body{cursor:auto}
+}
+@media(max-width:480px){.section{padding:4rem 1rem}.hero{padding:0 1rem}.stats-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="noise-overlay"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="loader" id="loader">
+  <div class="loader-brand"><iconify-icon icon="lucide:coffee" width="28"></iconify-icon> OUTBOX</div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<nav class="nav" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">OB</div>
+      <span class="nav-logo-text">OUTBOX CAFE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home"><iconify-icon icon="lucide:home" width="14"></iconify-icon> الرئيسية</a></li>
+      <li><a href="#menu"><iconify-icon icon="lucide:book-open" width="14"></iconify-icon> القائمة</a></li>
+      <li><a href="#about"><iconify-icon icon="lucide:users" width="14"></iconify-icon> من نحن</a></li>
+      <li><a href="#gallery"><iconify-icon icon="lucide:image" width="14"></iconify-icon> المعرض</a></li>
+      <li><a href="#contact"><iconify-icon icon="lucide:mail" width="14"></iconify-icon> تواصل</a></li>
+      <li><a href="#contact" class="nav-cta"><iconify-icon icon="lucide:calendar" width="14"></iconify-icon> احجز طاولة</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobile()"><iconify-icon icon="lucide:x" width="24"></iconify-icon></button>
+  <a href="#home" onclick="toggleMobile()"><iconify-icon icon="lucide:home" width="22"></iconify-icon> الرئيسية</a>
+  <a href="#menu" onclick="toggleMobile()"><iconify-icon icon="lucide:book-open" width="22"></iconify-icon> القائمة</a>
+  <a href="#about" onclick="toggleMobile()"><iconify-icon icon="lucide:users" width="22"></iconify-icon> من نحن</a>
+  <a href="#gallery" onclick="toggleMobile()"><iconify-icon icon="lucide:image" width="22"></iconify-icon> المعرض</a>
+  <a href="#contact" onclick="toggleMobile()"><iconify-icon icon="lucide:mail" width="22"></iconify-icon> تواصل</a>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="https://picsum.photos/seed/outboxcafe-hero/1920/1080.jpg" alt="Outbox Cafe">
+    <div class="hero-gradient"></div>
+  </div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span><iconify-icon icon="lucide:award" width="12"></iconify-icon><span>ESTD 2024 — COFFEE COMPANY</span></div>
+    <h1 class="hero-title"><span class="line1">OUTSIDE</span><span class="line2">THE BOX</span></h1>
+    <p class="hero-subtitle">تجربة قهوة استثنائية تخرج عن المألوف — دائمًا في قلوبنا</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary"><span>استكشف القائمة</span><iconify-icon icon="lucide:arrow-down-right" width="16"></iconify-icon></a>
+      <a href="#about" class="btn-secondary"><span>قصتنا</span><iconify-icon icon="lucide:play" width="16"></iconify-icon></a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <iconify-icon icon="lucide:chevrons-down" width="16" style="color:var(--gold);opacity:.5"></iconify-icon>
+    <span>اكتشف المزيد</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">
+      <span><iconify-icon icon="lucide:flame" width="14" style="color:var(--orange-accent)"></iconify-icon> SIGNATURE LAYERED ESPRESSO</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:zap" width="14" style="color:var(--gold)"></iconify-icon> NITRO COLD BREW</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:star" width="14" style="color:var(--latte)"></iconify-icon> ARTISANAL PASTRIES</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:flower-2" width="14" style="color:var(--orange-accent)"></iconify-icon> ORANGE BLOSSOM LATTE</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:box" width="14" style="color:var(--gold)"></iconify-icon> OUTSIDE THE BOX</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:heart" width="14" style="color:var(--coral)"></iconify-icon> ALWAYS INSIDE OUR HEARTS</span><div class="sep"></div>
+    </div>
+    <div class="marquee-item">
+      <span><iconify-icon icon="lucide:flame" width="14" style="color:var(--orange-accent)"></iconify-icon> SIGNATURE LAYERED ESPRESSO</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:zap" width="14" style="color:var(--gold)"></iconify-icon> NITRO COLD BREW</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:star" width="14" style="color:var(--latte)"></iconify-icon> ARTISANAL PASTRIES</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:flower-2" width="14" style="color:var(--orange-accent)"></iconify-icon> ORANGE BLOSSOM LATTE</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:box" width="14" style="color:var(--gold)"></iconify-icon> OUTSIDE THE BOX</span><div class="sep"></div>
+      <span><iconify-icon icon="lucide:heart" width="14" style="color:var(--coral)"></iconify-icon> ALWAYS INSIDE OUR HEARTS</span><div class="sep"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="section menu-section" id="menu">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-icon"><iconify-icon icon="lucide:book-open" width="32"></iconify-icon></div>
+      <div class="section-label"><iconify-icon icon="lucide:sparkles" width="14"></iconify-icon> قائمتنا</div>
+      <h2 class="section-title">نكهات خارجة عن المألوف</h2>
+      <p class="section-desc">كل فنجان يحكي قصة — من حبوب مختارة بعناية إلى إبداع في كل رشفة</p>
+    </div>
+    <div class="menu-categories reveal">
+      <button class="menu-cat-btn active" onclick="filterMenu('all',this)"><iconify-icon icon="lucide:grid-3x3" width="14"></iconify-icon> الكل</button>
+      <button class="menu-cat-btn" onclick="filterMenu('signature',this)"><iconify-icon icon="lucide:sparkles" width="14"></iconify-icon> سيغنيتشر</button>
+      <button class="menu-cat-btn" onclick="filterMenu('classics',this)"><iconify-icon icon="lucide:coffee" width="14"></iconify-icon> كلاسيك</button>
+      <button class="menu-cat-btn" onclick="filterMenu('pastries',this)"><iconify-icon icon="lucide:star" width="14"></iconify-icon> معجنات</button>
+    </div>
+    <div class="menu-grid" id="menuGrid">
+      <div class="menu-card featured reveal" data-category="signature">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:flame" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 7,500</div></div>
+        <h3 class="menu-card-name">Signature Layered Espresso</h3><p class="menu-card-desc">إسبريسو طبقي مميز بثلاث طبقات من النكهات المتدرجة — من الحلاوة إلى العمق</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:sparkles" width="10"></iconify-icon> سيغنيتشر</span><span class="menu-tag spicy"><iconify-icon icon="lucide:trending-up" width="10"></iconify-icon> الأكثر طلبًا</span><span class="menu-tag"><iconify-icon icon="lucide:layers" width="10"></iconify-icon> طبقي</span></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1" data-category="signature">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:zap" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 6,500</div></div>
+        <h3 class="menu-card-name">Outbox Nitro Cold Brew</h3><p class="menu-card-desc">قهوة باردة محقونة بالنيتروجين — ملساء كالحرير بقوام كريمي فريد</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:sparkles" width="10"></iconify-icon> سيغنيتشر</span><span class="menu-tag"><iconify-icon icon="lucide:snowflake" width="10"></iconify-icon> بارد</span></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2" data-category="signature">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:flower-2" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 7,000</div></div>
+        <h3 class="menu-card-name">Orange Blossom Latte</h3><p class="menu-card-desc">لاتيه بزهر البرتقال — لمسة شرقية عطرية تنتقل بك إلى بساتين المغرب</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:sparkles" width="10"></iconify-icon> سيغنيتشر</span><span class="menu-tag"><iconify-icon icon="lucide:flower" width="10"></iconify-icon> عطري</span></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-3" data-category="signature">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:crown" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 7,500</div></div>
+        <h3 class="menu-card-name">Pistachio Rose Latte</h3><p class="menu-card-desc">لاتيه الفستق والورد — تناغم فاخر بين الفستق المحمص والورد الدمشقي</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:sparkles" width="10"></iconify-icon> سيغنيتشر</span><span class="menu-tag spicy"><iconify-icon icon="lucide:lock" width="10"></iconify-icon> حصري</span></div>
+      </div>
+      <div class="menu-card reveal" data-category="signature">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:leaf" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 6,500</div></div>
+        <h3 class="menu-card-name">Cardamom Brew</h3><p class="menu-card-desc">قهوة بالهيل — وصفة تقليدية بلمسة عصرية، دفء الشرق في كل رشفة</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:sparkles" width="10"></iconify-icon> سيغنيتشر</span><span class="menu-tag"><iconify-icon icon="lucide:sun" width="10"></iconify-icon> تقليدي</span></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1" data-category="classics">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:coffee" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 4,000</div></div>
+        <h3 class="menu-card-name">Espresso</h3><p class="menu-card-desc">إسبريسو كلاسيكي — شوت مركز من أفضل حبوب العربية المختارة</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:coffee" width="10"></iconify-icon> كلاسيك</span><span class="menu-tag"><iconify-icon icon="lucide:flame" width="10"></iconify-icon> ساخن</span></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2" data-category="classics">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:cloud" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 5,000</div></div>
+        <h3 class="menu-card-name">Cappuccino</h3><p class="menu-card-desc">كابتشينو إيطالي — رغوة مخملية فوق إسبريسو غني بالشخصية</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:coffee" width="10"></iconify-icon> كلاسيك</span><span class="menu-tag"><iconify-icon icon="lucide:cloud" width="10"></iconify-icon> رغوي</span></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-3" data-category="classics">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:minus" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 5,500</div></div>
+        <h3 class="menu-card-name">Flat White</h3><p class="menu-card-desc">فلات وايت — نسبة مثالية من الحليب المبخر إلى الإسبريسو المزدوج</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:coffee" width="10"></iconify-icon> كلاسيك</span><span class="menu-tag"><iconify-icon icon="lucide:minus" width="10"></iconify-icon> خفيف</span></div>
+      </div>
+      <div class="menu-card reveal" data-category="classics">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:droplets" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 5,000</div></div>
+        <h3 class="menu-card-name">Americano</h3><p class="menu-card-desc">أمريكانو — إسبريسو مدعوم بماء ساخن، بساطة بلا تنازل</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:coffee" width="10"></iconify-icon> كلاسيك</span><span class="menu-tag"><iconify-icon icon="lucide:flame" width="10"></iconify-icon> ساخن</span></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1" data-category="pastries">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:star" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 5,500</div></div>
+        <h3 class="menu-card-name">Almond Croissant</h3><p class="menu-card-desc">كرواسون اللوز — مقرمش من الخارج، طري ومحشو بكريمة اللوز</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:star" width="10"></iconify-icon> معجنات</span><span class="menu-tag spicy"><iconify-icon icon="lucide:heart" width="10"></iconify-icon> الأكثر شعبية</span></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2" data-category="pastries">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:gift" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 6,000</div></div>
+        <h3 class="menu-card-name">Pistachio Cake</h3><p class="menu-card-desc">كيكة الفستق — إسفنجية بخلاصة الفستق الحلبي وتزيين كريمي فاخر</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:star" width="10"></iconify-icon> معجنات</span><span class="menu-tag"><iconify-icon icon="lucide:heart" width="10"></iconify-icon> حلو</span></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-3" data-category="pastries">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:circle" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 4,500</div></div>
+        <h3 class="menu-card-name">Chocolate Chip Cookie</h3><p class="menu-card-desc">كوكيز الشوكولاتة — طازج من الفرن، مقرمش من الأطراف ولين من المنتصف</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:star" width="10"></iconify-icon> معجنات</span><span class="menu-tag"><iconify-icon icon="lucide:circle" width="10"></iconify-icon> شوكولاتة</span></div>
+      </div>
+      <div class="menu-card reveal" data-category="pastries">
+        <div class="menu-card-header"><div class="menu-card-icon"><iconify-icon icon="lucide:cherry" width="24"></iconify-icon></div><div class="menu-card-price"><small>IQD</small> 5,000</div></div>
+        <h3 class="menu-card-name">Cheesecake Berry</h3><p class="menu-card-desc">تشيزكيك بالتوت — كريمية بنعومة الحرير مع صلصة التوت الطازجة</p>
+        <div class="menu-card-tags"><span class="menu-tag"><iconify-icon icon="lucide:star" width="10"></iconify-icon> معجنات</span><span class="menu-tag"><iconify-icon icon="lucide:heart" width="10"></iconify-icon> حلو</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item reveal"><h3 id="stat1">0+</h3><p><iconify-icon icon="lucide:coffee" width="14"></iconify-icon> نوع قهوة</p></div>
+    <div class="stat-item reveal reveal-delay-1"><h3 id="stat2">0+</h3><p><iconify-icon icon="lucide:heart" width="14"></iconify-icon> عميل سعيد</p></div>
+    <div class="stat-item reveal reveal-delay-2"><h3 id="stat3">0</h3><p><iconify-icon icon="lucide:map-pin" width="14"></iconify-icon> فرع</p></div>
+    <div class="stat-item reveal reveal-delay-3"><h3 id="stat4">0%</h3><p><iconify-icon icon="lucide:star" width="14"></iconify-icon> رضا العملاء</p></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section about-section" id="about">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-icon"><iconify-icon icon="lucide:heart" width="32"></iconify-icon></div>
+      <div class="section-label"><iconify-icon icon="lucide:book-open" width="14"></iconify-icon> قصتنا</div>
+      <h2 class="section-title">Outside The Box, Always Inside Our Hearts</h2>
+      <p class="section-desc">من حبوب مختارة يدويًا إلى فن التقديم — كل تفصيلة تُصمم لتخرج عن المألوف</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-image-wrap reveal">
+        <img src="https://z-cdn-media.chatglm.cn/files/e2b9fb4b-3e53-4169-9fa0-8d56135a9da0.jpg?auth_key=1880833660-4234535433a54575a8bd0da76049cf27-0-33b4620a812f60f842654a7c99fa490e" alt="OUTBOX CAFE — العلامة التجارية">
+        <div class="about-image-badge">
+          <iconify-icon icon="lucide:store" width="20" style="color:var(--gold)"></iconify-icon>
+          <div><span>2024</span><small>تأسسنا</small></div>
+        </div>
+      </div>
+      <div class="about-content">
+        <div class="about-content-label reveal"><iconify-icon icon="lucide:info" width="14"></iconify-icon> من نحن</div>
+        <h2 class="about-content-title reveal reveal-delay-1">Outside The Box,<br>Always Inside Our Hearts</h2>
+        <p class="about-content-desc reveal reveal-delay-2">في Outbox Cafe، نؤمن أن القهوة ليست مجرد مشروب — إنها تجربة. من حبوب مختارة يدويًا من أفضل المزارع، إلى فن التحميص والتقديم، كل تفصيلة تُصمم لتخرج عن المألوف وتصل إلى القلب.</p>
+        <div class="about-values">
+          <div class="about-value reveal reveal-delay-2"><div class="about-value-icon"><iconify-icon icon="lucide:lightbulb" width="18"></iconify-icon></div><div><h4>الابتكار</h4><p>نبدع في كل كوب وكل تجربة</p></div></div>
+          <div class="about-value reveal reveal-delay-3"><div class="about-value-icon"><iconify-icon icon="lucide:compass" width="18"></iconify-icon></div><div><h4>المغامرة</h4><p>نستكشف نكهات جديدة بلا حدود</p></div></div>
+          <div class="about-value reveal reveal-delay-3"><div class="about-value-icon"><iconify-icon icon="lucide:heart-handshake" width="18"></iconify-icon></div><div><h4>التواصل</h4><p>نبني مجتمعًا حول حب القهوة</p></div></div>
+          <div class="about-value reveal reveal-delay-4"><div class="about-value-icon"><iconify-icon icon="lucide:trending-up" width="18"></iconify-icon></div><div><h4>الارتقاء</h4><p>نرفع معايير القهوة دائمًا</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section experience-section">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-icon"><iconify-icon icon="lucide:sparkles" width="32"></iconify-icon></div>
+      <div class="section-label"><iconify-icon icon="lucide:gem" width="14"></iconify-icon> التجربة</div>
+      <h2 class="section-title">أكثر من مجرد كافيه</h2>
+      <p class="section-desc">مساحة حيث يلتقي الإبداع بالراحة — مصممة لإلهامك</p>
+    </div>
+    <div class="experience-cards">
+      <div class="experience-card reveal">
+        <div class="experience-icon"><iconify-icon icon="lucide:wifi" width="28"></iconify-icon></div>
+        <h3>مساحة العمل</h3><p>واي فاي فائق السرعة، مقابس كهربائية في كل زاوية، وإضاءة مثالية للإنتاجية</p>
+      </div>
+      <div class="experience-card reveal reveal-delay-1">
+        <div class="experience-icon"><iconify-icon icon="lucide:palette" width="28"></iconify-icon></div>
+        <h3>التصميم الفني</h3><p>ديكور صناعي عصري يمزج بين الفن والوظيفة — كل زاوية قابلة للإنستغرام</p>
+      </div>
+      <div class="experience-card reveal reveal-delay-2">
+        <div class="experience-icon"><iconify-icon icon="lucide:music" width="28"></iconify-icon></div>
+        <h3>الأجواء الموسيقية</h3><p>قائمة تشغيل مختارة بعناية تخلق المزاج المثالي — من الجاز إلى الإلكتروني</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GALLERY — Using sections from the brand visual image ========== -->
+<section class="section gallery-section" id="gallery">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-icon"><iconify-icon icon="lucide:camera" width="32"></iconify-icon></div>
+      <div class="section-label"><iconify-icon icon="lucide:image" width="14"></iconify-icon> المعرض</div>
+      <h2 class="section-title">لمحات من عالمنا</h2>
+      <p class="section-desc">اكتشف الأجواء والإبداع في كل ركن من Outbox Cafe</p>
+    </div>
+    <div class="gallery-grid">
+
+      <!-- 1: Coffee cups with OUTBOX logo — Left area of the image -->
+      <div class="gallery-item reveal">
+        <img src="https://z-cdn-media.chatglm.cn/files/d8bb7ca8-c5bf-4d87-a033-ba445bba2b92.jpg?auth_key=1880834183-0d52805e49c84862890f67e7095bc209-0-ee270e90599c3d0557e140cb503d4d3d" alt="أكواب قهوة OUTBOX CAFE" style="object-position:0% 50%">
+        <div class="gallery-overlay">
+          <div class="gallery-tag"><iconify-icon icon="lucide:coffee" width="10"></iconify-icon> قهوتنا</div>
+          <span class="gallery-caption"><iconify-icon icon="lucide:flame" width="14"></iconify-icon> كل كوب يحمل روح Outbox</span>
+        </div>
+      </div>
+
+      <!-- 2: Croissant & bread — Top-right area -->
+      <div class="gallery-item reveal reveal-delay-1">
+        <img src="https://z-cdn-media.chatglm.cn/files/d8bb7ca8-c5bf-4d87-a033-ba445bba2b92.jpg?auth_key=1880834183-0d52805e49c84862890f67e7095bc209-0-ee270e90599c3d0557e140cb503d4d3d" alt="معجنات Outbox الطازجة" style="object-position:85% 15%">
+        <div class="gallery-overlay">
+          <div class="gallery-tag"><iconify-icon icon="lucide:star" width="10"></iconify-icon> طازج</div>
+          <span class="gallery-caption"><iconify-icon icon="lucide:heart" width="14"></iconify-icon> معجنات طازجة كل صباح</span>
+        </div>
+      </div>
+
+      <!-- 3: Coffee bags / packaging — Middle-right area -->
+      <div class="gallery-item reveal reveal-delay-2">
+        <img src="https://z-cdn-media.chatglm.cn/files/d8bb7ca8-c5bf-4d87-a033-ba445bba2b92.jpg?auth_key=1880834183-0d52805e49c84862890f67e7095bc209-0-ee270e90599c3d0557e140cb503d4d3d" alt="أكياس قهوة Outbox" style="object-position:85% 55%">
+        <div class="gallery-overlay">
+          <div class="gallery-tag"><iconify-icon icon="lucide:package" width="10"></iconify-icon> حصري</div>
+          <span class="gallery-caption"><iconify-icon icon="lucide:box" width="14"></iconify-icon> حبوبنا المختارة — خارج الصندوق</span>
+        </div>
+      </div>
+
+      <!-- 4: Storefront / cafe exterior — Bottom area -->
+      <div class="gallery-item reveal reveal-delay-3">
+        <img src="https://z-cdn-media.chatglm.cn/files/d8bb7ca8-c5bf-4d87-a033-ba445bba2b92.jpg?auth_key=1880834183-0d52805e49c84862890f67e7095bc209-0-ee270e90599c3d0557e140cb503d4d3d" alt="واجهة كافيه Outbox" style="object-position:50% 95%">
+        <div class="gallery-overlay">
+          <div class="gallery-tag"><iconify-icon icon="lucide:store" width="10"></iconify-icon> واجهتنا</div>
+          <span class="gallery-caption"><iconify-icon icon="lucide:zap" width="14"></iconify-icon> Outside The Box — دائمًا في القلب</span>
+        </div>
+      </div>
+
+      <!-- 5: Brand identity / customers interaction — Center area -->
+      <div class="gallery-item reveal reveal-delay-4">
+        <img src="https://z-cdn-media.chatglm.cn/files/d8bb7ca8-c5bf-4d87-a033-ba445bba2b92.jpg?auth_key=1880834183-0d52805e49c84862890f67e7095bc209-0-ee270e90599c3d0557e140cb503d4d3d" alt="هوية Outbox CAFE" style="object-position:40% 40%">
+        <div class="gallery-overlay">
+          <div class="gallery-tag"><iconify-icon icon="lucide:users" width="10"></iconify-icon> هويتنا</div>
+          <span class="gallery-caption"><iconify-icon icon="lucide:smile" width="14"></iconify-icon> Embrace The New — لحظات تُصنع هنا</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section testimonials-section">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-icon"><iconify-icon icon="lucide:message-circle" width="32"></iconify-icon></div>
+      <div class="section-label"><iconify-icon icon="lucide:message-square" width="14"></iconify-icon> آراء العملاء</div>
+      <h2 class="section-title">ماذا يقولون عنا</h2>
+      <p class="section-desc">تجارب حقيقية من محبي Outbox Cafe</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars"><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon></div>
+        <p class="testimonial-text">أفضل لاتيه جربته في حياتي! Orange Blossom Latte كان تجربة استثنائية — النكهة العطرية لا تُنسى.</p>
+        <div class="testimonial-author"><img class="testimonial-avatar" src="https://picsum.photos/seed/avatar-sara/100/100.jpg" alt="سارة"><div><h4>سارة أحمد</h4><p><iconify-icon icon="lucide:palette" width="12"></iconify-icon> مصممة جرافيك</p></div></div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-stars"><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon></div>
+        <p class="testimonial-text">المكان مثالي للعمل — الواي فاي ممتاز، الأجواء هادئة، والقهوة لا تُقاوم. أصبح مكتب الثاني!</p>
+        <div class="testimonial-author"><img class="testimonial-avatar" src="https://picsum.photos/seed/avatar-mohamad/100/100.jpg" alt="محمد"><div><h4>محمد علي</h4><p><iconify-icon icon="lucide:code-2" width="12"></iconify-icon> مطور برمجيات</p></div></div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-stars"><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon><iconify-icon icon="lucide:star" width="16"></iconify-icon></div>
+        <p class="testimonial-text">كرواسون اللوز هنا مختلف تمامًا — طازج كل يوم، والنكهة لا تُضاهى. أنصح الجميع بزيارته!</p>
+        <div class="testimonial-author"><img class="testimonial-avatar" src="https://picsum.photos/seed/avatar-nour/100/100.jpg" alt="نور"><div><h4>نور الدين</h4><p><iconify-icon icon="lucide:heart-pulse" width="12"></iconify-icon> طبيب أسنان</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-icon reveal" style="margin-bottom:2rem"><iconify-icon icon="lucide:rocket" width="32"></iconify-icon></div>
+  <div class="cta-title reveal">Embrace <em>The New</em></div>
+  <p class="cta-desc reveal reveal-delay-1">اكتشف تجربة القهوة التي تخرج عن المألوف — كل زيارة هي مغامرة جديدة</p>
+  <div class="reveal reveal-delay-2"><a href="#contact" class="btn-primary"><span>احجز طاولتك الآن</span><iconify-icon icon="lucide:calendar" width="16"></iconify-icon></a></div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-icon"><iconify-icon icon="lucide:send" width="32"></iconify-icon></div>
+      <div class="section-label"><iconify-icon icon="lucide:mail" width="14"></iconify-icon> تواصل معنا</div>
+      <h2 class="section-title">نحب أن نسمع منك</h2>
+      <p class="section-desc">سؤال، اقتراح، أو حجز — نحن هنا دائمًا</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3 class="reveal">ننتظرك<br>في Outbox</h3>
+        <p class="reveal reveal-delay-1">سواء كنت تبحث عن فنجان قهوة مثالي أو مساحة للإلهام — أبوابنا مفتوحة دائمًا.</p>
+        <div class="contact-details">
+          <div class="contact-detail reveal reveal-delay-2"><div class="contact-detail-icon"><iconify-icon icon="lucide:map-pin" width="20"></iconify-icon></div><div><h4>العنوان</h4><p>شارع المتنبي، بغداد، العراق</p></div></div>
+          <div class="contact-detail reveal reveal-delay-3"><div class="contact-detail-icon"><iconify-icon icon="lucide:phone" width="20"></iconify-icon></div><div><h4>الهاتف</h4><p>+964 770 123 4567</p></div></div>
+          <div class="contact-detail reveal reveal-delay-3"><div class="contact-detail-icon"><iconify-icon icon="lucide:clock" width="20"></iconify-icon></div><div><h4>ساعات العمل</h4><p>يوميًا: 7:00 ص — 12:00 م</p></div></div>
+          <div class="contact-detail reveal reveal-delay-4"><div class="contact-detail-icon"><iconify-icon icon="lucide:mail" width="20"></iconify-icon></div><div><h4>البريد الإلكتروني</h4><p>hello@outboxcafe.iq</p></div></div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group"><label><iconify-icon icon="lucide:user" width="12"></iconify-icon> الاسم</label><input type="text" placeholder="اسمك الكريم" required></div>
+            <div class="form-group"><label><iconify-icon icon="lucide:phone" width="12"></iconify-icon> الهاتف</label><input type="tel" placeholder="+964 7XX XXX XXXX" required></div>
+          </div>
+          <div class="form-group"><label><iconify-icon icon="lucide:mail" width="12"></iconify-icon> البريد الإلكتروني</label><input type="email" placeholder="email@example.com"></div>
+          <div class="form-group"><label><iconify-icon icon="lucide:list" width="12"></iconify-icon> نوع الطلب</label><select><option>حجز طاولة</option><option>استفسار</option><option>فعالية خاصة</option><option>اقتراح</option><option>أخرى</option></select></div>
+          <div class="form-group"><label><iconify-icon icon="lucide:message-square" width="12"></iconify-icon> رسالتك</label><textarea placeholder="أخبرنا المزيد..." required></textarea></div>
+          <button type="submit" class="form-submit"><iconify-icon icon="lucide:send" width="16"></iconify-icon> إرسال الرسالة</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3><iconify-icon icon="lucide:box" width="18"></iconify-icon> OUTBOX CAFE</h3>
+      <p>Outside The Box, Always Inside Our Hearts — تجربة قهوة استثنائية تخرج عن المألوف منذ 2024.</p>
+      <div class="footer-social">
+        <a href="#"><iconify-icon icon="lucide:instagram" width="18"></iconify-icon></a>
+        <a href="#"><iconify-icon icon="lucide:facebook" width="18"></iconify-icon></a>
+        <a href="#"><iconify-icon icon="lucide:twitter" width="18"></iconify-icon></a>
+        <a href="#"><iconify-icon icon="lucide:message-circle" width="18"></iconify-icon></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4><iconify-icon icon="lucide:book-open" width="12"></iconify-icon> القائمة</h4>
+      <a href="#menu"><iconify-icon icon="lucide:sparkles" width="12"></iconify-icon> سيغنيتشر كوفي</a>
+      <a href="#menu"><iconify-icon icon="lucide:coffee" width="12"></iconify-icon> كلاسيك</a>
+      <a href="#menu"><iconify-icon icon="lucide:star" width="12"></iconify-icon> معجنات وحلويات</a>
+      <a href="#menu"><iconify-icon icon="lucide:snowflake" width="12"></iconify-icon> مشروبات باردة</a>
+    </div>
+    <div class="footer-col">
+      <h4><iconify-icon icon="lucide:store" width="12"></iconify-icon> الكافيه</h4>
+      <a href="#about"><iconify-icon icon="lucide:info" width="12"></iconify-icon> قصتنا</a>
+      <a href="#gallery"><iconify-icon icon="lucide:camera" width="12"></iconify-icon> المعرض</a>
+      <a href="#"><iconify-icon icon="lucide:users" width="12"></iconify-icon> فريقنا</a>
+      <a href="#"><iconify-icon icon="lucide:briefcase" width="12"></iconify-icon> وظائف</a>
+    </div>
+    <div class="footer-col">
+      <h4><iconify-icon icon="lucide:headphones" width="12"></iconify-icon> الدعم</h4>
+      <a href="#contact"><iconify-icon icon="lucide:mail" width="12"></iconify-icon> تواصل معنا</a>
+      <a href="#"><iconify-icon icon="lucide:help-circle" width="12"></iconify-icon> الأسئلة الشائعة</a>
+      <a href="#"><iconify-icon icon="lucide:shield" width="12"></iconify-icon> سياسة الخصوصية</a>
+      <a href="#"><iconify-icon icon="lucide:file-text" width="12"></iconify-icon> الشروط والأحكام</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p><iconify-icon icon="lucide:heart" width="12"></iconify-icon> © 2024 Outbox Cafe. جميع الحقوق محفوظة.</p>
+    <div class="footer-bottom-links"><a href="#">سياسة الخصوصية</a><a href="#">الشروط</a><a href="#">ملفات الارتباط</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><iconify-icon icon="lucide:chevron-up" width="20"></iconify-icon></button>
+
+<div class="toast" id="toast"><div class="toast-icon"><iconify-icon icon="lucide:check-circle" width="20"></iconify-icon></div><span class="toast-message" id="toastMessage">تم الإرسال بنجاح!</span></div>
+
+<script>
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loader').classList.add('hidden')},2200)});
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mouseX=0,mouseY=0,ringX=0,ringY=0;
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;dot.style.left=mouseX-4+'px';dot.style.top=mouseY-4+'px'});
+function animateRing(){ringX+=(mouseX-ringX)*.15;ringY+=(mouseY-ringY)*.15;ring.style.left=ringX-20+'px';ring.style.top=ringY-20+'px';requestAnimationFrame(animateRing)}animateRing();
+document.querySelectorAll('a,button,.menu-card,.gallery-item,.menu-cat-btn,.contact-detail,.footer-social a,.section-icon').forEach(el=>{el.addEventListener('mouseenter',()=>ring.classList.add('hover'));el.addEventListener('mouseleave',()=>ring.classList.remove('hover'))});
+const pc=document.getElementById('particles');for(let i=0;i<30;i++){const p=document.createElement('div');p.classList.add('particle');p.style.left=Math.random()*100+'%';p.style.animationDuration=(Math.random()*8+6)+'s';p.style.animationDelay=(Math.random()*8)+'s';const s=(Math.random()*3+1)+'px';p.style.width=s;p.style.height=s;pc.appendChild(p)}
+const nb=document.getElementById('navbar');window.addEventListener('scroll',()=>{nb.classList.toggle('scrolled',window.scrollY>50);document.getElementById('backToTop').classList.toggle('visible',window.scrollY>500)});
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('active')}
+function filterMenu(c,b){document.querySelectorAll('.menu-cat-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.menu-card').forEach(card=>{const cat=card.dataset.category;if(c==='all'||cat===c){card.style.display='';card.style.opacity='0';card.style.transform='translateY(20px)';setTimeout(()=>{card.style.transition='all .5s ease';card.style.opacity='1';card.style.transform='translateY(0)'},50)}else{card.style.display='none'}})}
+const rObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.reveal').forEach(el=>rObs.observe(el));
+let sC=false;const sObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting&&!sC){sC=true;aC('stat1',0,25,'+');aC('stat2',0,5000,'+');aC('stat3',0,3,'');aC('stat4',0,98,'%')}})},{threshold:.3});document.querySelectorAll('.stats-section').forEach(el=>sObs.observe(el));
+function aC(id,s,e,sf){const el=document.getElementById(id);const d=2000;const st=(e-s)/(d/16);let c=s;function u(){c+=st;if(c>=e){el.textContent=e.toLocaleString()+sf;return}el.textContent=Math.floor(c).toLocaleString()+sf;requestAnimationFrame(u)}u()}
+function handleSubmit(e){e.preventDefault();showToast('تم إرسال رسالتك بنجاح! سنتواصل معك قريبًا ☕');e.target.reset()}
+function showToast(m){const t=document.getElementById('toast');document.getElementById('toastMessage').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000)}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+</script>
+</body>
+</html>
